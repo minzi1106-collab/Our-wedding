@@ -1,19 +1,19 @@
-/* 1. 첫 번째 페이지(커버) - 세로 스크롤을 위한 중앙 정렬 */
+/* 커버 섹션 */
 .slide--cover {
   position: relative;
   width: 100%;
   min-height: 100vh;
   height: auto;
-  flex: none;
-  
-  /* 정중앙 정렬 */
-  display: flex !important;      
-  justify-content: center; 
-  align-items: center;     
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #F9FDFF;
   margin: 0;
   padding: 0;
+  /* AOS가 커버를 숨기지 않도록 */
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* 2. 이미지 설정 - 비율 유지하며 95% 크기 */
@@ -283,13 +283,8 @@
 .reveal-section.active {
     opacity: 1 !important;
     transform: translateY(0) !important;
-}sss
-
-/* 첫 번째 섹션은 항상 보이도록 예외 처리 */
-.slide--cover {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
 }
+
 
 /* --- Location Section Style --- */
 /* =============================================
@@ -1055,3 +1050,327 @@ body.modal-open {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
+
+  /* =============================================
+       MainFont: fonts 폴더의 CormorantUpright-Bold.ttf
+       ============================================= */
+       @font-face {
+        font-family: 'MainFont';
+        src: url('./fonts/CormorantUpright-Bold.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+  
+      /* =============================================
+         기본 설정: 반응형 카드 레이아웃
+         - 모바일(375x812) 기준으로 디자인
+         - 더 큰 화면에서는 가운데 정렬된 카드처럼 보이게
+         ============================================= */
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto; /* html이 스크롤 → window.scrollY 작동 → AOS 감지 가능 */
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: visible; /* body는 스크롤 안 함 */
+      }
+      body {
+        display: block;
+        background-color: #F9FDFF;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+  
+      /* 모바일 카드 래퍼: 세로 스크롤을 위한 설정 */
+      .container {
+        width: 100%;
+        max-width: 375px;
+        margin: 0 auto;
+        min-height: 100vh;
+        display: block;
+        overflow: visible; /* 스크롤 가능하도록 설정 */
+      }
+  
+      .main {
+        display: block;
+      }
+  
+      /* =============================================
+         슬라이드 공통 - 세로 스크롤을 위한 설정
+         ============================================= */
+      .slide {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      /* ---------------------------------------------
+     상단: SAVE / THE / DATE (폰트만 강제 적용)
+     --------------------------------------------- */
+  .cover__title {
+    width: 100%;
+    margin: 0;
+    color: #B8366E;
+    /* 폰트만 MainFont로 강제하고 나머지는 기존 유지 */
+    font-family: 'MainFont', 'Cormorant', serif !important;
+    font-weight: 700 !important;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    text-align: center;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cover__title-line {
+    display: block;
+    width: fit-content;
+    /* span 태그에도 폰트가 상속되도록 명시 */
+    font-family: 'MainFont', 'Cormorant', serif !important;
+  }
+  
+  /* 아래 수치들은 기존에 설정하신 값을 그대로 유지합니다 */
+  .cover__title-line--save {
+    font-size: clamp(56px, 16vw, 84px);
+    transform: translateX(-25%);
+    margin-bottom: -5px;
+  }
+  
+  .cover__title-line--the {
+    font-size: clamp(48px, 13vw, 70px); 
+    transform: translateX(80%);
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+  
+  .cover__title-line--date {
+    font-size: clamp(56px, 16vw, 84px);
+    transform: translateX(-15%);
+    margin-top: -2px;
+  }
+      /* ---------------------------------------------
+         중앙: 케이크 + 좌우 텍스트
+         --------------------------------------------- */
+      .cover__center {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: clamp(16px, 4vh, 24px);
+      }
+      .cover__side-text {
+        flex-shrink: 0;
+        width: 80px;
+        margin: 0;
+        font-family: 'Zilla Slab', serif;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        color: #F39BB9;
+        text-align: center;
+        line-height: 1.2;
+      }
+      .cover__cake {
+        flex-shrink: 0;
+        max-width: 160px;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+  
+      /* ---------------------------------------------
+         하단: SK & MJ + 슬로건
+         --------------------------------------------- */
+      .cover__names {
+        margin: clamp(12px, 3vh, 24px) 0 8px;
+        font-family: 'MainFont', 'Cormorant', serif;
+        font-weight: 700;
+        font-size: clamp(56px, 15vw, 96px);
+        color: #B8366E;
+        text-align: center;
+        white-space: nowrap;
+      }
+      /* 슬로건: 두 줄, MainFont, 화면 중앙 정렬 */
+      .cover__tagline {
+        margin: 0;
+        font-family: 'MainFont', 'Cormorant', serif;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        color: #F39BB9;
+        text-align: center;
+        line-height: 1.5;
+      }
+  
+      /* ---------------------------------------------
+         배경음악 토글 버튼: 1번 슬라이드 우측 상단, 투명 배경
+         --------------------------------------------- */
+      .music-toggle-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      .music-toggle-btn .music-toggle-icon {
+        display: block;
+        width: 72px;
+        height: auto;
+        max-width: 100%;
+      }
+  
+      /* 큰 화면(태블릿, PC)에서 카드가 너무 작아 보이지 않게 약간 키움 */
+      @media (min-width: 768px) {
+        .container {
+          max-width: 420px;
+        }
+        .cover__title-line {
+          font-size: clamp(64px, 8vw, 96px);
+        }
+        .cover__names {
+          font-size: clamp(48px, 6vw, 72px);
+        }
+      }
+  
+  
+      /* =============================================
+         티켓 플립 섹션 (ticket-final14 통합)
+         ============================================= */
+      .slide--ticket-new {
+        position: relative;
+        overflow: hidden;
+        background-color: #fff;
+        padding: 0;
+      }
+  
+      .ticket-slide-wrap {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 375px;
+        height: 100vh;
+        height: 100svh;
+        background-color: #fff;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+    /* ── 리본: container 기준 absolute ── */
+    .ribbon {
+      position: absolute;
+      /* 리본 크기: container 높이의 18% 정도 */
+      width: 18svh;
+      width: 18vh;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .ribbon-tl { top: 0; left: 0; }
+    .ribbon-tr { top: 0; right: 0; }
+    .ribbon-bl { bottom: 0; left: 0; }
+    .ribbon-br { bottom: 0; right: 0; }
+    .ribbon img { width: 100%; display: block; }
+  
+    /* ── 티켓 섹션: 세로 전체를 flex로 균등 배분 ── */
+    .ticket-section {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      /* 리본에 가리지 않도록 패딩 */
+      padding: 10svh 20px 8svh;
+      padding: 10vh 20px 8vh;
+      height: 100%;
+      gap: 0;
+    }
+  
+    /* 타이틀: container 높이의 10% */
+    .title-img-wrap {
+      width: 55%;
+      flex-shrink: 0;
+      margin-bottom: 2svh;
+      margin-bottom: 2vh;
+    }
+    .title-img-wrap img {
+      width: 100%;
+      display: block;
+    }
+  
+    /* ── 티켓: 남은 공간을 최대한 채움 ── */
+    .ticket-wrapper {
+      position: relative;
+      z-index: 1;
+      /* 너비는 고정, 높이는 남은 공간에 맞게 */
+      width: auto;
+      /* 비율 유지: 790:1370 ≈ 0.577 */
+      /* 가용 높이(100svh - 상하패딩 - 타이틀 - 힌트) 기준 */
+      height: 68svh;
+      height: 68vh;
+      aspect-ratio: 856 / 1618;
+      perspective: 800px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  
+    .ticket-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: 0.7s ease-out;
+    }
+  
+    .ticket-wrapper.flipped .ticket-inner {
+      transform: perspective(800px) rotateY(180deg);
+    }
+  
+    .ticket-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+  
+    .ticket-back-face { transform: rotateY(180deg); }
+  
+    .ticket-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+  
+    /* ── 하단 힌트 ── */
+    .ticket-hint {
+      margin-top: 2svh;
+      margin-top: 2vh;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: #8e7c65;
+      text-align: center;
+      flex-shrink: 0;
+    }
