@@ -1,0 +1,1057 @@
+/* 1. 첫 번째 페이지(커버) - 세로 스크롤을 위한 중앙 정렬 */
+.slide--cover {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  flex: none;
+  
+  /* 정중앙 정렬 */
+  display: flex !important;      
+  justify-content: center; 
+  align-items: center;     
+  
+  background-color: #F9FDFF;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. 이미지 설정 - 비율 유지하며 95% 크기 */
+.cover__bg-img {
+  width: 95%;         
+  height: auto;        /* 비율 유지 */
+  display: block;
+  flex: none;          /* 이미지가 눌리지 않게 고정 */
+}
+
+/* 3. 음악 버튼 (이것도 혹시 모르니 확인하세요) */
+.music-toggle-btn {
+  position: absolute; 
+  top: 20px;
+  right: 20px;
+  z-index: 999;        /* 👈 이미지보다 무조건 위로 오게 숫자를 키웠어요 */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+.music-toggle-icon {
+  width: 72px;         /* 버튼 크기 */
+  height: auto;
+}
+/* =============================================
+   2번 페이지: Intro Section (추가되는 부분)
+============================================= */
+.slide--intro {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F9FDFF;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+/* =============================================
+   Couple Section
+============================================= */
+
+.slide--couple {
+  background-color: #FEEBFA;
+  min-height: 100vh;
+  padding: 60px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.couple-wrap {
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+/* 상단 영역 */
+
+.couple-top {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 50px;
+
+  position: relative;   /* 👈 이 줄 추가 */
+}
+
+.couple-col {
+  width: 50%;          /* 핵심 */
+  text-align: center;
+}
+
+.couple-role {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.couple-parents {
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 13px;
+  letter-spacing: -0.03em;
+
+  white-space: nowrap;      /* 변경 */
+}
+
+.couple-name {
+  margin-top: 3px; 
+  font-size: 35px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+
+  font-family: 'Noto Serif KR', serif;  /* 👈 추가 */
+}
+
+/* 가운데 세로선 */
+
+.couple-divider {
+  position: absolute;         /* 👈 추가 */
+  left: 50%;                   /* 👈 추가 */
+  transform: translateX(-50%); /* 👈 추가 */
+
+  width: 1.5px;
+  height: 160px;
+  background: #111;
+}
+
+/* 하단 메시지 */
+
+.couple-message p {
+  font-size: 13px;
+  line-height: 1.3;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.message-gap {
+  height: 20px;
+}
+
+.couple-col:first-child {
+  transform: translateX(-20px);   /* 👈 왼쪽으로 이동 */
+}
+
+.couple-col:last-child {
+  transform: translateX(20px);    /* 👈 오른쪽으로 이동 */
+}
+/* =============================================
+   Calendar Section
+============================================= */
+
+.slide--calendar {
+  background: #ffffff;
+  min-height: 100vh;
+  padding: 60px 12px;
+  font-family: 'Noto Serif KR', serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.calendar-wrap {
+  max-width: 340px;   /* celebrate와 동일 */
+  margin: 0 auto;
+}
+
+/* 상단 그룹 */
+
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 80px;
+}
+
+.calendar-mark {
+  width: 40px;     /* 👈 Celebrate와 동일 */
+  height: auto;
+  display: block;
+}
+
+.calendar-mark-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;       /* Celebrate와 동일 */
+  padding-top: 20px;
+  margin-bottom: -20px;
+}
+
+.calendar-title {
+  margin: 0;
+  font-family: 'Song Myung', serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #B8366E;
+
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-title .word {
+  letter-spacing: -0.05em;   /* OUR / DAY 내부 자간 (좁게) */
+}
+
+.calendar-title .word:first-child {
+  margin-right: 6px;       /* OUR ↔ DAY 사이 간격 */
+}
+
+/* 연도 */
+
+.calendar-year {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+/* 월 */
+
+.calendar-month {
+  font-size: 33px;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+/* 요일 */
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.calendar-weekdays .sun {
+  color: #ff4d4d;
+}
+
+/* 날짜 */
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 24px 0;
+}
+
+.calendar-days div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 1 / 1;   /* 모든 칸 정사각형 */
+  font-size: 18px;
+}
+
+.day-highlight {
+  border: 2px dashed #B63A64;
+}
+
+
+/* 1. 모든 섹션의 기본 투명도를 일단 1로 강제 설정 (보이게 만들기) */
+.reveal-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: all 0.8s ease-out;
+    display: flex !important; /* 섹션이 날아가지 않게 고정 */
+}
+
+/* 2. 만약 애니메이션을 꼭 쓰고 싶다면, 아래 '초기화' 코드를 사용하세요 */
+/* (현재는 안 보이는 게 문제이므로 위 1번 코드가 우선입니다) */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.reveal-section.active {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}sss
+
+/* 첫 번째 섹션은 항상 보이도록 예외 처리 */
+.slide--cover {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* --- Location Section Style --- */
+/* =============================================
+   Location Section - 세로 스크롤
+============================================= */
+.slide--location {
+  background: #FFF8FE;
+  min-height: 100vh;
+  padding: 60px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 상단 그룹: Celebrate / OUR DAY와 동일한 구조 */
+.location-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  margin-bottom: 60px; /* 기존 섹션들의 여백 통일 */
+}
+
+.location-mark {
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+.location-title {
+  margin: 0;
+  font-family: 'Song Myung', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #B8366E;
+  letter-spacing: 0.014em;
+  /* text-transform: uppercase;  <-- 이 줄을 삭제하거나 아래처럼 변경하세요 */
+  text-transform: none; 
+}
+
+/* 지도 영역 */
+.map-container {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 30px;
+}
+
+#map {
+  width: 100%;
+  height: 350px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  background: rgba(244, 244, 244, 0.9);
+}
+
+/* 텍스트 정보: 폰트 크기 및 자간 조정 */
+/* 📍 오시는 길 텍스트 정보 영역 */
+.location-info {
+  margin-bottom: 40px;
+  font-family: 'Inter', -apple-system, sans-serif; 
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #111; /* 부드러운 블랙 */
+}
+
+.venue-name {
+  font-family: 'Song Myung', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #B8366E;
+  letter-spacing: 0.005em; /* 살짝만 정돈 */
+  display: block;
+  margin-bottom: 6px;
+}
+
+.floor-info {
+  font-family: 'Inter', sans-serif; /* 폰트 확인 */
+  font-size: 15px; 
+  font-weight: 600; 
+    color: #222; 
+  margin-bottom: 12px;
+  letter-spacing: -0.01em; /* 진한 글씨일수록 자간을 미세하게 조여주면 세련돼 보입니다 */
+}
+
+.address {
+  font-size: 13px;
+  font-weight: 400; /* 보통 두께 */
+  color: #666;
+  word-break: keep-all; /* 주소가 중간에 이상하게 끊기지 않게 함 */
+}
+
+/* 3. 슬림해진 버튼 디자인 (높이 조정) */
+.guide-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 170px;
+  height: 40px; /* 48px -> 40px로 축소 (슬림) */
+  margin: 0 auto 25px;
+  padding: 0 8px 0 20px;
+  border: 1.2px solid #B8366E; /* 선 굵기도 살짝 얇게 */
+  border-radius: 20px;
+  color: #111;
+  font-size: 14px;
+}
+
+.plus-icon {
+  width: 26px; /* 아이콘도 비율에 맞춰 축소 */
+  height: 26px;
+  background-color: #B8366E;
+  color: white;
+  border-radius: 50%;
+  line-height: 24px;
+  font-size: 18px;
+}
+
+/* =============================================
+   Guide Map Modal (핑크 톤)
+============================================= */
+.guide-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  padding: 20px;
+  background: rgba(255, 240, 245, 0.8);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.guide-modal.is-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-modal__content {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative; /* 닫기 버튼 absolute 기준 */
+}
+
+.guide-modal__paper {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 14px 40px rgba(184, 54, 110, 0.18);
+}
+
+.guide-modal__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* 닫기 버튼은 기존 .guide-btn 스타일을 그대로 재사용 */
+.guide-modal__close {
+  margin: 0 auto;
+  background: transparent;
+  cursor: pointer;
+  border: 1.2px solid #B8366E;
+}
+
+.guide-modal__close span:first-child {
+  flex: 1;
+  text-align: center;
+  color: #999;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* 하단 맵 링크 바 (슬림 버전) */
+.map-links {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  height: 44px; /* 60px -> 44px로 대폭 축소 (세련미) */
+  margin: 0 auto;
+  border: 1.2px solid #B8366E;
+  border-radius: 22px;
+}
+
+.map-link {
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+  flex: 1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.v-line {
+  width: 1px;
+  height: 14px; /* 구분선도 짧게 */
+  background-color: #B8366E;
+  opacity: 0.5;
+}
+
+/* 팝업 내 닫기 버튼: 원래 버튼 디자인 + 중앙 정렬 */
+.guide-modal__close {
+  position: absolute !important;      /* 팝업 내부 기준 절대 위치 */
+  left: 50% !important;
+  bottom: 20% !important;            /* 화면 하단에서 20% 위로 이동 */
+  transform: translateX(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; /* 텍스트 항상 중앙 */
+
+  width: 170px !important;
+  height: 40px !important;
+  margin: -40px auto 0;
+  padding: 0 40px !important;         /* 양쪽 여백 확보 (오른쪽 X 아이콘 자리 포함) */
+
+  border: 1.2px solid #B8366E !important;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+/* 버튼 안의 '닫기' 글자 스타일 */
+.guide-modal__close span:first-child {
+  flex: 0 0 auto !important;     /* 내용 크기만큼 차지 */
+  width: 100% !important;        /* 버튼 너비 기준 가운데 정렬 */
+  text-align: center !important; /* 항상 중앙 정렬 */
+  color: #111 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* 버튼 안의 '×' 아이콘 스타일 (분홍 동그라미) */
+.guide-modal__close .plus-icon {
+  position: absolute !important;
+  right: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 26px !important;
+  height: 26px !important;
+  background-color: #B8366E !important;
+  color: white !important;
+  border-radius: 50% !important;
+
+  font-size: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* =============================================
+   Timeline Section (식순) - 세로 스크롤
+============================================= */
+/* 식순 섹션 전체 설정 */
+.slide--timeline {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  max-width: none;
+  margin: 0 auto !important;
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 60px 24px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* 헤더 텍스트 스타일 (직접 수정용) */
+.timeline-header h2 {
+  font-family: 'Song Myung', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #B8366E;
+  text-transform: uppercase;
+  letter-spacing: 0.014em;
+  margin: 0;
+}
+
+/* 헤더 아이콘 스타일 */
+.timeline-header img {
+  width: 40px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.timeline-mark {
+  width: 32px;
+  height: auto;
+  display: block;
+}
+
+.timeline-title {
+  margin: 0;
+  font-family: 'MainFont', 'Cormorant', serif;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B8366E;
+}
+
+/* --- 내부 요소 스타일 --- */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.timeline-item--left .timeline-text {
+  text-align: left;
+}
+
+.timeline-item--right {
+  flex-direction: row-reverse;
+}
+
+.timeline-item--right .timeline-icon {
+  margin-right: 0;
+  margin-left: 25px;
+}
+
+.timeline-item--right .timeline-text {
+  text-align: right;
+}
+
+.timeline-icon {
+  flex-shrink: 0;
+  width: 110px;
+  margin-right: 25px;
+}
+
+.timeline-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.timeline-text {
+  flex: 1;
+  text-align: left;
+}
+
+.timeline-text .time {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #B8366E;
+  margin-bottom: 4px;
+}
+
+.timeline-text .event {
+  display: block;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.timeline-text .description {
+  font-size: 13px;
+  line-height: 1.65;
+  letter-spacing: -0.03em;
+  color: #666;
+  margin: 0;
+}
+
+.timeline-text .description + .description {
+  margin-top: 10px;
+}
+
+.description--highlight {
+  color: #B8366E;
+  text-align: center;
+}
+
+/* =============================================
+   RSVP Section Styles - 세로 스크롤
+============================================= */
+.slide--rsvp {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: #FEEBFA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.rsvp-mark {
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+.rsvp-mark-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  margin-bottom: -20px;
+}
+
+.rsvp-title {
+  margin: 0;
+  font-family: 'Song Myung', serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #B8366E;
+
+  display: flex;
+  justify-content: center;
+}
+
+.rsvp-content {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.rsvp-text {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  color: #333 !important;
+  text-align: center !important;
+  letter-spacing: -0.05em !important;
+  line-height: 1.8 !important;
+}
+
+/* RSVP 텍스트 애니메이션 효과 */
+.slide--rsvp .rsvp-text {
+  opacity: 1;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.slide--rsvp.reveal-section .rsvp-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide--rsvp.reveal-section .rsvp-text:nth-child(1) { transition-delay: 0.1s; }
+.slide--rsvp.reveal-section .rsvp-text:nth-child(2) { transition-delay: 0.2s; }
+.slide--rsvp.reveal-section .rsvp-text:nth-child(3) { transition-delay: 0.3s; }
+
+/* =============================================
+   Gallery Section Styles - 세로 스크롤
+============================================= */
+.slide--gallery {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: #F9FDFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.gallery-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.gallery-mark {
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+.gallery-title {
+  margin: 0;
+  font-family: 'Song Myung', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #B8366E;
+  letter-spacing: 0.014em;
+  text-transform: uppercase;
+}
+
+.gallery-hint {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.8;
+  text-align: center;
+  margin: 0;
+}
+
+/* 갤러리 스와이퍼 스타일 */
+.gallery-swiper {
+  width: 100%;
+  max-width: 335px; /* 375px - 좌우 여백 20px */
+  margin: 0 auto;
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(0.98);
+}
+
+/* Swiper 네비게이션 버튼 스타일 */
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0.5;   /* 투명도 */
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  border: 1px solid rgba(184, 54, 110, 0.2);
+  margin-top: -22px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px;
+  font-weight: 300;
+  color: #B8366E;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+/* Swiper pagination 스타일 */
+.swiper-pagination {
+  position: relative;
+  bottom: auto !important;
+  margin-top: 20px;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #FEEBFA;
+  opacity: 1;
+  transition: all 0.3s ease;
+  margin: 0 4px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #B8366E;
+  transform: scale(1.2);
+}
+
+/* 라이트박스 스타일 */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 라이트박스 네비게이션 버튼 */
+.lightbox .swiper-button-next,
+.lightbox .swiper-button-prev {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.lightbox .swiper-button-next:after,
+.lightbox .swiper-button-prev:after {
+  color: #333;
+}
+
+.lightbox .swiper-button-next {
+  right: 20px;
+}
+
+.lightbox .swiper-button-prev {
+  left: 20px;
+}
+
+/* 라이트박스 pagination */
+.lightbox .swiper-pagination {
+  bottom: 30px !important;
+}
+
+.lightbox .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.lightbox .swiper-pagination-bullet-active {
+  background: #B8366E;
+}
+
+/* 라이트박스 닫기 버튼 */
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #333;
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10000;
+}
+
+.gallery-image:active {
+  transform: scale(0.98);
+}
+
+/* 티켓 섹션 레이아웃 */
+.slide--ticket {
+  background-color: #F9FDFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  box-sizing: border-box;
+}
+
+/* 3D 효과를 위한 부모 컨테이너 */
+.ticket-container {
+  width: 100%;
+  max-width: 320px; /* 휴대폰 화면에 맞춘 너비 */
+  height: 520px;    /* 티켓 세로 길이에 맞춰 조정 가능 */
+  perspective: 1500px;
+  margin: 0 auto;
+}
+
+/* 실제 뒤집히는 카드 */
+.ticket-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* JS로 붙여줄 flip 클래스 */
+.ticket-card.flip {
+  transform: rotateY(180deg);
+}
+
+/* 앞면과 뒷면 공통 설정 */
+.ticket-side {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden; /* 뒤집혔을 때 뒷면이 안 보이게 함 */
+  -webkit-backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(184, 54, 110, 0.15);
+}
+
+.ticket-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 이미지 비율 유지하며 꽉 채움 */
+  display: block;
+}
+
+/* 뒷면은 미리 180도 돌려놓기 */
+.ticket-back {
+  transform: rotateY(180deg);
+}
+
+/* 스크롤 애니메이션 연동 (안 보임 방지) */
+.slide--ticket.reveal-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.slide--ticket.reveal-section.active {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}

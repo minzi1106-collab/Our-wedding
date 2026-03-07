@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding</title>
+  <!-- Cormorant Upright 계열(제목), Zilla Slab(보조 텍스트) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&family=Song+Myung&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <!-- 카카오맵 SDK는 initMap()에서 동적으로 로드합니다 -->
+ <style>
+    /* =============================================
+       MainFont: fonts 폴더의 CormorantUpright-Bold.ttf
+       ============================================= */
+    @font-face {
+      font-family: 'MainFont';
+      src: url('./fonts/CormorantUpright-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =============================================
+       기본 설정: 반응형 카드 레이아웃sss
+       - 모바일(375x812) 기준으로 디자인
+       - 더 큰 화면에서는 가운데 정렬된 카드처럼 보이게
+       ============================================= */
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto; /* 세로 스크롤 허용 */
+    }
+    body {
+      display: block;
+      background-color: #F9FDFF;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* 모바일 카드 래퍼: 세로 스크롤을 위한 설정 */
+    .container {
+      width: 100%;
+      max-width: 375px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: block;
+      overflow: visible; /* 스크롤 가능하도록 설정 */
+    }
+
+    .main {
+      display: block;
+    }
+
+    /* =============================================
+       슬라이드 공통 - 세로 스크롤을 위한 설정
+       ============================================= */
+    .slide {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* =============================================
+       1번 슬라이드: 커버 - 이미지 버전
+       ============================================= */
+       .slide--cover {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F9FDFF;
+}
+
+    /* ---------------------------------------------
+   상단: SAVE / THE / DATE (폰트만 강제 적용)
+   --------------------------------------------- */
+.cover__title {
+  width: 100%;
+  margin: 0;
+  color: #B8366E;
+  /* 폰트만 MainFont로 강제하고 나머지는 기존 유지 */
+  font-family: 'MainFont', 'Cormorant', serif !important;
+  font-weight: 700 !important;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cover__title-line {
+  display: block;
+  width: fit-content;
+  /* span 태그에도 폰트가 상속되도록 명시 */
+  font-family: 'MainFont', 'Cormorant', serif !important;
+}
+
+/* 아래 수치들은 기존에 설정하신 값을 그대로 유지합니다 */
+.cover__title-line--save {
+  font-size: clamp(56px, 16vw, 84px);
+  transform: translateX(-25%);
+  margin-bottom: -5px;
+}
+
+.cover__title-line--the {
+  font-size: clamp(48px, 13vw, 70px); 
+  transform: translateX(80%);
+  margin-top: -2px;
+  margin-bottom: -2px;
+}
+
+.cover__title-line--date {
+  font-size: clamp(56px, 16vw, 84px);
+  transform: translateX(-15%);
+  margin-top: -2px;
+}
+    /* ---------------------------------------------
+       중앙: 케이크 + 좌우 텍스트
+       --------------------------------------------- */
+    .cover__center {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: clamp(16px, 4vh, 24px);
+    }
+    .cover__side-text {
+      flex-shrink: 0;
+      width: 80px;
+      margin: 0;
+      font-family: 'Zilla Slab', serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: #F39BB9;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .cover__cake {
+      flex-shrink: 0;
+      max-width: 160px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ---------------------------------------------
+       하단: SK & MJ + 슬로건
+       --------------------------------------------- */
+    .cover__names {
+      margin: clamp(12px, 3vh, 24px) 0 8px;
+      font-family: 'MainFont', 'Cormorant', serif;
+      font-weight: 700;
+      font-size: clamp(56px, 15vw, 96px);
+      color: #B8366E;
+      text-align: center;
+      white-space: nowrap;
+    }
+    /* 슬로건: 두 줄, MainFont, 화면 중앙 정렬 */
+    .cover__tagline {
+      margin: 0;
+      font-family: 'MainFont', 'Cormorant', serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: #F39BB9;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ---------------------------------------------
+       배경음악 토글 버튼: 1번 슬라이드 우측 상단, 투명 배경
+       --------------------------------------------- */
+    .music-toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .music-toggle-btn .music-toggle-icon {
+      display: block;
+      width: 72px;
+      height: auto;
+      max-width: 100%;
+    }
+
+    /* 큰 화면(태블릿, PC)에서 카드가 너무 작아 보이지 않게 약간 키움 */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 420px;
+      }
+      .cover__title-line {
+        font-size: clamp(64px, 8vw, 96px);
+      }
+      .cover__names {
+        font-size: clamp(48px, 6vw, 72px);
+      }
+    }
+
+    /* =============================================
+       티켓 플립 애니메이션 섹션
+       ============================================= */
+    .slide--ticket {
+      min-height: 100vh;
+      padding: 60px 20px;
+      background: #F9FDFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .invitation-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    .invitation-image {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .invitation-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 16px;
+      color: #B8366E;
+      margin: 0;
+      line-height: 1.6;
+      letter-spacing: -0.05em;
+    }
+
+    .ticket-container {
+      perspective: 1000px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .ticket-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      cursor: pointer;
+    }
+
+    .ticket-card.flip {
+      transform: rotateY(180deg);
+    }
+
+    .ticket-front,
+    .ticket-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ticket-front img,
+    .ticket-back img {
+      width: 100%;
+      height: auto;
+      max-width: 320px;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .ticket-back {
+      transform: rotateY(180deg);
+    }
+
+    /* reveal-section 애니메이션 */
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<audio id="bgm-audio" loop preload="auto">
+  <source src="audio/summertime.mp3" type="audio/mpeg">
+</audio>
+
+  <!-- ============================================= -->
+  <!-- 전체 래퍼: 375px 고정, 가운데, 세로 스크롤 -->
+  <!-- ============================================= -->
+  <div class="container">
+    <main class="main">
+
+      <!-- ----------------------------------------- -->
+      <!-- 1번 슬라이드: 커버 (피그마 디자인 → 텍스트+이미지 구현) -->
+      <!-- 나중에 2번 슬라이드 section을 이 아래에 추가하면 됨 -->
+      <!-- ----------------------------------------- -->
+      <section class="slide slide--cover">
+        <img src="images/landing.png" alt="Wedding Landing" class="cover__bg-img">
+      
+        <button type="button" class="music-toggle-btn" id="music-toggle-btn" aria-label="배경음악 재생/정지">
+          <img class="music-toggle-icon" id="music-toggle-icon" src="images/off_image.png" alt="" />
+        </button>
+      </section>
+
+      <section class="slide slide--intro reveal-section">
+        
+        <div class="reveal-content" style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 20px; margin-bottom: -20px;">
+          <img src="images/mark.png" alt="Mark" style="width: 40px; height: auto; display: block;">
+          <p style="margin: 0; font-family: 'Song Myung', serif; font-size: 14px; color: #B8366E; letter-spacing: 0.014em; text-transform: uppercase; font-weight: 500;">Celebrate</p>
+        </div>
+
+        <div class="reveal-content" style="padding: 80px 24px 30px; text-align: center; color: #333; line-height: 1.8; letter-spacing: -0.04em; font-size: 12px; word-break: keep-all;">
+          
+          <p style="margin: 0 0 12px 0;">우린 헤어질 수 없는 사이니까.<br>내게는 그런 확신이 있었다.<br>생각에 생각을 거듭하여 내린 확신이 아니었다.<br>어린 시절의 어느 날 자연스럽게 깨달은 거였다.</p>
+          
+          <p style="margin: 0 0 12px 0;">너와 나는 죽을 때까지 함께하겠네.<br>함께 있지 않더라도 함께하겠네.</p>
+          
+          <p style="margin: 0 0 15px 0;">그러는 동안 우리 마음에는<br>비슷한 공간이 만들어졌고,<br>떨어져 있을 때에도 그것은 같은 울림을 만들어냈다.</p>
+          
+          <p style="margin: 30px 0 0 0; font-size: 11px; font-weight: 500; color: #333;">— 최진영, 『구의 증명』</p>
+          
+        </div>
+
+        <div style="width: 100%; line-height: 0; margin: 0; margin-top: auto;">
+          <img src="images/angel.png" alt="Angel" style="width: 100%; height: auto; display: block;">
+        </div>
+
+      </section>
+      <section class="slide slide--couple reveal-section">
+        <div class="couple-wrap">
+      
+          <div class="couple-top">
+            <div class="couple-col">
+              <p class="couple-role">Groom</p>
+              <p class="couple-parents">권영민 · 정은하 의 아들</p>
+              <p class="couple-name">권성근</p>
+            </div>
+      
+            <div class="couple-divider"></div>
+      
+            <div class="couple-col">
+              <p class="couple-role">Bride</p>
+              <p class="couple-parents">김동수 · 이희정 의 딸</p>
+              <p class="couple-name">김민지</p>
+            </div>
+          </div>
+                   
+           <div class="couple-message"
+          style="font-size:13px; line-height:1.8; letter-spacing:-0.04em; font-weight:400;">
+            <p>나란한 이름으로 드리는 첫 번째 편지</p>
+            <p>있는 그대로 사랑하고 서로의 존재에 감사하며</p>
+            <p>변함없이 서로를 아끼며 살겠습니다.</p>
+      
+            <div class="message-gap"></div>
+      
+            <p>늘 곁에서 아껴주셨던 고마운 분들을 모십니다</p>
+          </div>
+      
+        </div>
+      </section>
+      <section class="slide slide--calendar reveal-section">
+        <div class="calendar-wrap">
+      
+          <!-- 상단 그룹 (mark + Our day) -->
+          <div class="calendar-header">
+            <img src="images/mark.png" alt="mark" class="calendar-mark">
+            <h2 class="calendar-title">
+              <span class="word">OUR</span>
+              <span class="word">DAY</span>
+            </h2>
+          </div>
+      
+          <!-- 연도 -->
+          <div class="calendar-year">2026</div>
+      
+          <!-- 월 -->
+          <div class="calendar-month">10월</div>
+      
+          <!-- 요일 -->
+          <div class="calendar-weekdays">
+            <div class="sun">일</div>
+            <div>월</div>
+            <div>화</div>
+            <div>수</div>
+            <div>목</div>
+            <div>금</div>
+            <div>토</div>
+          </div>
+      
+          <!-- 날짜 -->
+          <div class="calendar-days">
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+      
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+      
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+          <div class="day-highlight">17</div>
+      
+            <div>18</div>
+            <div>19</div>
+            <div>20</div>
+            <div>21</div>
+            <div>22</div>
+            <div>23</div>
+            <div>24</div>
+      
+            <div>25</div>
+            <div>26</div>
+            <div>27</div>
+            <div>28</div>
+            <div>29</div>
+            <div>30</div>
+            <div>31</div>
+          </div>
+      
+        </div>
+      </section>  <!-- slide--calendar 끝 -->
+      <section class="slide slide--location reveal-section">
+        <div class="location-wrap">
+          
+          <div class="location-header">
+            <img src="images/mark.png" alt="mark" class="location-mark">
+            <h2 class="location-title">Wedding Venue</h2>
+          </div>
+      
+          <div class="map-container">
+            <img src="images/deco_line.png" alt="" class="deco-line top">
+            <div id="map">
+              <div id="map-loading" class="map-loading">지도를 불러오는 중입니다...</div>
+            </div>
+            <img src="images/deco_line.png" alt="" class="deco-line bottom">
+          </div>
+      
+          <div class="location-info">
+            <strong class="venue-name">보코 서울 강남 by IHG</strong>
+            <p class="floor-info">LL층 볼룸홀</p>
+            <p class="address">서울특별시 강남구 도산대로 144 보코서울강남</p>
+          </div>
+      
+          <div class="guide-btn">
+            <span>오시는 길 안내</span>
+            <span class="plus-icon">+</span>
+          </div>
+      
+          <div class="map-links">
+            <a href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%8F%84%EC%82%B0%EB%8C%80%EB%A1%9C%20144%20%EB%B3%B4%EC%BD%94%20%EC%84%9C%EC%9A%B8%20%EA%B0%95%EB%82%A8" target="_blank" class="map-link">네이버 지도</a>
+            <div class="v-line"></div>
+            <a href="https://map.kakao.com/link/to/%EB%B3%B4%EC%BD%94%EC%84%9C%EC%9A%B8%EA%B0%95%EB%82%A8,37.517799,127.0247136" target="_blank" class="map-link">카카오 지도</a>
+            <div class="v-line"></div>
+            <a id="tmap-link" href="tmap://route?goalx=127.0247136&goaly=37.517799&goalname=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%8F%84%EC%82%B0%EB%8C%80%EB%A1%9C%20144%20%EB%B3%B4%EC%BD%94%EC%84%9C%EC%9A%B8%EA%B0%95%EB%82%A8" class="map-link">T MAP</a>
+          </div>
+      
+        </div>
+      </section>
+
+      <!-- 식순 타임라인: 오시는 길 바로 아래에 위치 -->
+      <section class="slide slide--timeline reveal-section">
+        <div class="timeline-header" style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 20px; margin-bottom: 60px;">
+          <img src="images/mark.png" alt="mark" style="width: 40px; height: auto; display: block;">
+          <h2 style="margin: 0; font-family: 'Song Myung', serif; font-size: 14px; font-weight: 500; color: #B8366E; letter-spacing: -0.07em; text-transform: none;">
+            Order of Ceremony
+          </h2>
+        </div>
+      
+           <!-- 1. 케이크: 아이콘 왼쪽, 텍스트 오른쪽 -->
+          <div class="timeline-container">
+            <div class="timeline-item timeline-item--left">
+              <div class="timeline-icon" style="padding-top: 25px;">
+                <img src="images/케이크.png" alt="식순 아이콘">
+              </div>
+              <div class="timeline-text">
+                <span class="time">11:15</span>
+                <p class="description" style="margin: 0; line-height: 1.4; letter-spacing: -0.07em;">
+                  하객맞이를 시작합니다.<br>
+                  저희와 소중한 첫 인사를 나누어 주세요.<br>
+                  한 분 한 분의 미소를 더 오래 간직하고 싶습니다.
+                </p>
+              </div>
+            </div>
+            
+            </div>
+
+          <!-- 2. 초: 아이콘 오른쪽, 텍스트 왼쪽 -->
+          <div class="timeline-item" style="display: flex; align-items: center; justify-content: space-between; flex-direction: row;">
+  
+            <div class="timeline-text" style="flex: 1; text-align: left; padding-right: 20px;">
+              <span class="time" style="display: block; font-weight: 700; color: #B8366E; margin-bottom: 8px;">12:00</span>
+              
+              <p class="description" style="margin: 0; line-height: 1.4; letter-spacing: -0.07em; word-break: normal;">
+                예식을 시작합니다.<br>
+                예식과 식사가 함께 진행되는 동시예식입니다.<br>
+                한 분 한 분께, 정중히 식사를 대접해 드리고자 하니<br>
+                넓은 양해 부탁드립니다.
+              </p>
+            </div>
+          
+            <div class="timeline-icon" style="flex-shrink: 0; width: 100px;">
+              <img src="images/초.png" alt="식순 아이콘" 
+                   style="width: 80%; height: auto; display: block; margin: 0 0 0 auto;"> </div>
+          
+          </div>
+
+          <!-- 3. 와인잔: 아이콘 왼쪽, 텍스트 오른쪽 -->
+          <div class="timeline-item timeline-item--left">
+            <div class="timeline-icon" style="width: 23%; margin: 0 auto;">
+              <img src="images/와인잔.png" alt="식순 아이콘">
+            </div>
+            <div class="timeline-text" style="padding-left: 25px;">
+              <p class="description" style="margin: 0; line-height: 1.4; letter-spacing: -0.07em;">
+                설레는 1부 예식 후,<br>
+                감사의 잔을 나누는 2부 순서를 마련했습니다.<br>
+                새로운 모습으로 다시 인사드릴<br>
+                저희의 소중한 순간까지 함께해 주세요.
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. 꽃: 아이콘 오른쪽, 텍스트 왼쪽 + 마지막 문구 강조 -->
+          <div class="timeline-item" style="display: flex; align-items: center; justify-content: space-between; flex-direction: row; margin-top: 40px;">
+  
+            <div class="timeline-text" style="flex: 1; text-align: left; padding-right: 15px;">
+              <p class="description" style="margin: 0; line-height: 1.4; letter-spacing: -0.07em;">
+                소중한 마음을 담아,<br>
+                예식에 사용된 생화를 꽃다발로 드립니다.<br>
+                가실 때, 저희의 설렘을 작은 선물로 담아드립니다.
+              </p>
+              
+              <p class="description" style="margin-top: 12px; line-height: 1.4; letter-spacing: -0.1em; color: #B8366E; font-weight: 600;">
+                저희의 시작을 축복한 꽃들이<br>
+                여러분의 일상에서도 예쁘게 피어나길 바랍니다.
+              </p>
+            </div>
+          
+            <div class="timeline-icon" style="flex-shrink: 0; width: 110px;">
+              <img src="images/꽃.png" alt="식순 아이콘" 
+                   style="width: 100%; height: auto; display: block; margin: 0 0 0 auto;">
+            </div>
+          
+        </div>
+      </section>
+
+      <!-- RSVP 섹션 -->
+      <section class="slide slide--rsvp reveal-section">
+      <div class="rsvp-mark-group">
+  <img src="images/mark.png" class="rsvp-mark">
+  <h2 class="rsvp-title">RSVP</h2>
+</div>
+          
+          <div class="rsvp-content" style="margin-top: 40px; text-align: center;">
+            <p class="rsvp-text" style="margin: 0 0 24px 0; font-family: 'Noto Serif KR', serif; font-size: 16px; color: #333; text-align: center; letter-spacing: -0.05em; line-height: 1.8;">
+              한 분 한 분 정성껏 모시고 싶은 마음을 담아,<br>
+              지정 좌석을 마련해 드릴 예정입니다.
+            </p>
+            
+            <p class="rsvp-text" style="margin: 0 0 24px 0; font-family: 'Noto Serif KR', serif; font-size: 16px; color: #333; text-align: center; letter-spacing: -0.05em; line-height: 1.8;">
+              참석 여부를 미리 알려주시면<br>
+              더욱 정성껏 자리를 준비해 두겠습니다.
+            </p>
+            
+            <p class="rsvp-text" style="margin: 0; font-family: 'Noto Serif KR', serif; font-size: 16px; color: #333; text-align: center; letter-spacing: -0.05em; line-height: 1.8;">
+              미처 소식을 전하지 못하셨더라도,<br>
+              예식홀 내에 여유 좌석을 충분히 마련해 두었으니<br>
+              부담 없이 오시어 저희의 시작을 축복해 주시기 바랍니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 갤러리 섹션 -->
+      <section class="slide slide--gallery reveal-section">
+        <div class="gallery-header">
+          <img src="images/mark.png" alt="mark" class="gallery-mark">
+          <h2 class="gallery-title">Love, Recorded</h2>
+          <p class="gallery-hint">사진을 클릭하시면 크게 보실 수 있습니다.</p>
+        </div>
+        
+        <div class="swiper gallery-swiper">
+          <div class="swiper-wrapper" id="gallery-swiper-wrapper">
+            <!-- Gallery images will be injected here by JavaScript -->
+          </div>
+          <!-- 좌우 네비게이션 화살표 버튼 -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <!-- 하단 pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+
+      <!-- 티켓 플립 애니메이션 섹션 -->
+      <section class="slide slide--ticket reveal-section">
+        <div class="invitation-section">
+          <img src="images/invitation.png" alt="Invitation" class="invitation-image">
+          <p class="invitation-text">티켓을 클릭해 보세요!</p>
+        </div>
+
+        <div class="ticket-container">
+          <div class="ticket-card" id="ticketCard">
+            <div class="ticket-front">
+              <img src="images/ticket_front.png" alt="Ticket Front">
+            </div>
+            <div class="ticket-back">
+              <img src="images/ticket_back.png" alt="Ticket Back">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 라이트박스 -->
+      <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">×</button>
+        <div class="swiper lightbox-swiper" id="lightbox-swiper">
+          <div class="swiper-wrapper" id="lightbox-swiper-wrapper">
+            <!-- Lightbox images will be injected here by JavaScript -->
+          </div>
+          <!-- 라이트박스 좌우 네비게이션 -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <!-- 라이트박스 pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  var IMG_OFF = 'images/off_image.png';
+  var IMG_ON  = 'images/on_image.png';
+  var FADE_MS = 400;
+  var STEP_MS = 20;
+
+  // 1. 음악 관련 기능
+  var btn   = document.getElementById('music-toggle-btn');
+  var icon  = document.getElementById('music-toggle-icon');
+  var audio = document.getElementById('bgm-audio');
+
+  function fadeTo(targetVolume, onComplete) {
+    var start = audio.volume;
+    var startTime = Date.now();
+    var timer = setInterval(function () {
+      var elapsed = Date.now() - startTime;
+      var t = Math.min(elapsed / FADE_MS, 1);
+      audio.volume = start + (targetVolume - start) * t;
+      if (t >= 1) {
+        clearInterval(timer);
+        if (onComplete) onComplete();
+      }
+    }, STEP_MS);
+  }
+
+  function initCoverMusic() {
+    if (!btn || !icon || !audio) return;
+    audio.pause();
+    audio.volume = 0;
+    icon.src = IMG_OFF;
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.volume = 0;
+        audio.play();
+        icon.src = IMG_ON;
+        fadeTo(1);
+      } else {
+        fadeTo(0, function () {
+          audio.pause();
+          icon.src = IMG_OFF;
+        });
+      }
+    });
+  }
+
+  // 2. 스크롤 애니메이션 기능
+  function initScrollReveal() {
+    var reveals = document.querySelectorAll('.reveal-section');
+
+    function reveal() {
+      for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 80;
+
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add('active');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', reveal);
+    // 페이지 로드 직후 한 번 더 강제로 실행
+    reveal();
+    setTimeout(reveal, 150);
+  }
+
+  // 2-0. 안내 이미지(오시는 길) 모달
+  function initGuideModal() {
+    var modal = document.getElementById('guide-modal');
+    var content = document.getElementById('guide-modal-content');
+    var openBtn = document.querySelector('.guide-btn');
+    var closeBtn = document.getElementById('guide-modal-close');
+    if (!modal || !openBtn || !closeBtn) return;
+
+    var pushed = false;
+
+    function setOpen(isOpen) {
+      if (isOpen) {
+        modal.classList.add('is-open');
+        document.body.classList.add('modal-open');
+        modal.setAttribute('aria-hidden', 'false');
+      } else {
+        modal.classList.remove('is-open');
+        document.body.classList.remove('modal-open');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function openModal(viaHistory) {
+      setOpen(true);
+      if (!viaHistory && !pushed) {
+        pushed = true;
+        history.pushState({ guideModal: true }, '');
+      }
+    }
+
+    function closeModal(viaHistory) {
+      if (!viaHistory && pushed) {
+        history.back();
+        return;
+      }
+      pushed = false;
+      setOpen(false);
+    }
+
+    openBtn.addEventListener('click', function () {
+      openModal(false);
+    });
+
+    closeBtn.addEventListener('click', function () {
+      closeModal(false);
+    });
+
+    modal.addEventListener('click', function (e) {
+      // 배경 클릭 시 닫기 (콘텐츠 클릭은 제외)
+      if (content && content.contains(e.target)) return;
+      closeModal(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal(false);
+      }
+    });
+
+    window.addEventListener('popstate', function () {
+      // 뒤로가기: 모달 닫기 / 앞으로가기: 모달 열기
+      if (history.state && history.state.guideModal) {
+        pushed = true;
+        openModal(true);
+      } else if (modal.classList.contains('is-open')) {
+        closeModal(true);
+      }
+    });
+  }
+
+  // 2-1. 지도 앱 링크 (TMAP) 클릭 처리
+  function initMapLinks() {
+    var tmapLink = document.getElementById('tmap-link');
+    if (!tmapLink) return;
+
+    var deepLink = tmapLink.getAttribute('href');
+    var fallbackUrl = 'https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%8F%84%EC%82%B0%EB%8C%80%EB%A1%9C%20144%20%EB%B3%B4%EC%BD%94%20%EC%84%9C%EC%9A%B8%20%EA%B0%95%EB%82%A8';
+    var ua = navigator.userAgent || '';
+    var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+
+    tmapLink.addEventListener('click', function (e) {
+      if (!deepLink) return;
+
+      // PC(라이브서버)에서는 앱 딥링크가 동작하지 않아 커서만 뜨는 경우가 많아서,
+      // 웹으로 보내고 안내 메시지를 띄웁니다.
+      if (!isMobile) {
+        e.preventDefault();
+        window.open(fallbackUrl, '_blank');
+        alert('PC에서는 TMAP 앱을 열 수 없어 장소 페이지(보코서울강남)로 이동합니다. 모바일에서 누르면 TMAP 앱 길찾기가 열립니다.');
+        return;
+      }
+
+      // 모바일: TMAP 앱 열기 시도, 실패 시 웹으로 fallback
+      e.preventDefault();
+      window.location.href = deepLink;
+
+      setTimeout(function () {
+        if (!document.hidden) {
+          window.location.href = fallbackUrl;
+        }
+      }, 1200);
+    });
+  }
+
+  // 3. 카카오맵: SDK 로더
+  function loadKakaoMapsSdk(done) {
+    if (window.kakao && kakao.maps && kakao.maps.load) {
+      done(null);
+      return;
+    }
+
+    var existing = document.querySelector('script[data-kakao-sdk="maps"]');
+    if (existing) {
+      // 이미 로딩 시도 중이면 조금 기다렸다가 확인
+      var waitedMs = 0;
+      var timer = setInterval(function () {
+        waitedMs += 50;
+        if (window.kakao && kakao.maps && kakao.maps.load) {
+          clearInterval(timer);
+          done(null);
+        } else if (waitedMs >= 5000) {
+          clearInterval(timer);
+          done(new Error('kakao-sdk-timeout'));
+        }
+      }, 50);
+      return;
+    }
+
+    var appKey = '3fc8f5ac9556974b34d62f7ddfe83c7d';
+    var s = document.createElement('script');
+    s.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + encodeURIComponent(appKey) + '&autoload=false';
+    s.async = true;
+    s.defer = true;
+    s.setAttribute('data-kakao-sdk', 'maps');
+    s.onload = function () {
+      if (window.kakao && kakao.maps && kakao.maps.load) {
+        done(null);
+      } else {
+        done(new Error('kakao-sdk-loaded-but-not-ready'));
+      }
+    };
+    s.onerror = function () {
+      done(new Error('kakao-sdk-load-failed'));
+    };
+    document.head.appendChild(s);
+  }
+
+  // 4. 카카오맵: 지도 초기화
+  function initMap() {
+    var mapEl = document.getElementById('map');
+    if (!mapEl) return;
+
+    var loadingEl = document.getElementById('map-loading');
+    function setLoadingText(text) {
+      if (!loadingEl) return;
+      loadingEl.textContent = text;
+    }
+    function hideLoading() {
+      if (!loadingEl) return;
+      loadingEl.style.display = 'none';
+    }
+
+    setLoadingText('지도를 불러오는 중입니다...');
+
+    loadKakaoMapsSdk(function (err) {
+      if (err) {
+        if (location && location.protocol === 'file:') {
+          setLoadingText('지도를 불러올 수 없습니다. (파일로 직접 열면 차단될 수 있어요. Live Server로 실행해 주세요.)');
+        } else {
+          var origin = (location && location.origin) ? location.origin : '';
+          setLoadingText('지도를 불러올 수 없습니다. (카카오 개발자 콘솔 Web 플랫폼에 현재 도메인' + (origin ? ' ' + origin : '') + ' 등록을 확인해 주세요.)');
+        }
+        return;
+      }
+
+      kakao.maps.load(function () {
+        var lat = 37.517799;
+        var lng = 127.0247136;
+        var center = new kakao.maps.LatLng(lat, lng);
+
+        var map = new kakao.maps.Map(mapEl, {
+          center: center,
+          level: 3
+        });
+
+        // 확대/축소: 마우스휠/핀치 기본 제공 + 컨트롤 표시
+        map.setZoomable(true);
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        // 마커
+        var marker = new kakao.maps.Marker({ position: center });
+        marker.setMap(map);
+
+        hideLoading();
+      });
+    });
+  }
+
+
+  // 4. 모든 기능을 실행시키는 입구
+  function init() {
+    initCoverMusic();
+    initScrollReveal();
+    initGuideModal();
+    initMapLinks();
+    initMap();
+  }
+
+  // 페이지 로드가 완료되면 init 함수 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+
+  <!-- 안내 이미지 팝업(Modal): 오시는 길 안내 -->
+  <div id="guide-modal" class="guide-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="오시는 길 안내">
+    <div id="guide-modal-content" class="guide-modal__content">
+      <div class="guide-modal__paper">
+        <img src="images/guide_map.png" alt="오시는 길 안내 이미지" class="guide-modal__img">
+      </div>
+      <button type="button" id="guide-modal-close" class="guide-modal__close">
+        <span>닫기</span>
+        <span class="plus-icon">×</span>
+      </button>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  
+  <!-- 갤러리 기능 JavaScript -->
+  <script>
+    // 갤러리 이미지 배열 - 나중에 50장 이상 추가 가능
+    const galleryImages = [
+  "images/2787.jpg",
+  "images/57.jpg",
+  "images/47.jpg",
+  "images/2216.jpg",
+  "images/92.jpg"
+    ];
+
+    // 갤러리 기능 초기화
+    function initGallery() {
+      // 갤러리 슬라이드 생성
+      const galleryWrapper = document.getElementById('gallery-swiper-wrapper');
+      const lightboxWrapper = document.getElementById('lightbox-swiper-wrapper');
+      
+      // 갤러리 슬라이드 HTML 생성
+      galleryImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="gallery-image">`;
+        galleryWrapper.appendChild(slide);
+      });
+      
+      // 라이트박스 슬라이드 HTML 생성
+      galleryImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="lightbox-image">`;
+        lightboxWrapper.appendChild(slide);
+      });
+      
+      // 갤러리 스와이퍼 초기화
+      const gallerySwiper = new Swiper('.gallery-swiper', {
+        spaceBetween: 16,
+        slidesPerView: 1,
+        centeredSlides: true,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 12
+          },
+          375: {
+            slidesPerView: 1,
+            spaceBetween: 16
+          }
+        }
+      });
+      
+      // 라이트박스 스와이퍼 초기화
+      const lightboxSwiper = new Swiper('.lightbox-swiper', {
+        spaceBetween: 0,
+        slidesPerView: 1,
+        centeredSlides: true,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        keyboard: {
+          enabled: true,
+        }
+      });
+      
+      // 라이트박스 기능
+      const lightbox = document.getElementById('lightbox');
+      const lightboxClose = document.getElementById('lightbox-close');
+      const galleryImagesElements = document.querySelectorAll('.gallery-image');
+      
+      // 갤러리 이미지 클릭 시 라이트박스 열기
+      galleryImagesElements.forEach((image, index) => {
+        image.addEventListener('click', () => {
+          lightbox.classList.add('active');
+          // 같은 인덱스의 라이트박스 슬라이드로 이동
+          lightboxSwiper.slideTo(index + 1, 0);
+        });
+      });
+      
+      // 라이트박스 닫기 버튼
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+      
+      // 라이트박스 배경 클릭 시 닫기
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('active');
+        }
+      });
+      
+      // ESC 키로 라이트박스 닫기
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          lightbox.classList.remove('active');
+        }
+      });
+      
+      // 갤러리와 라이트박스 동기화
+      gallerySwiper.on('slideChange', function () {
+        if (lightbox.classList.contains('active')) {
+          lightboxSwiper.slideTo(gallerySwiper.activeIndex, 0);
+        }
+      });
+      
+      lightboxSwiper.on('slideChange', function () {
+        gallerySwiper.slideTo(lightboxSwiper.activeIndex, 0);
+      });
+    }
+    
+    // DOM 로드 후 갤러리 초기화
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGallery);
+    } else {
+      initGallery();
+     }
+</script>
+
+<script src="js/main.js"></script>
+
+<section class="slide slide--ticket reveal-section">
+  <div class="ticket-header" style="text-align: center; margin-bottom: 30px; padding-top: 50px;">
+    <img src="images/invitation.png" alt="invitation" style="max-width: 120px; width: 35%; margin-bottom: 15px;">
+    <p style="font-family: 'Song Myung', serif; font-size: 15px; color: #B8366E; letter-spacing: 0.05em; margin: 0;">티켓을 클릭해 보세요!</p>
+  </div>
+
+  <div class="ticket-container">
+    <div class="ticket-card" id="ticketCard">
+      <div class="ticket-side ticket-front">
+        <img src="images/ticket_front.png" alt="Ticket Front">
+      </div>
+      <div class="ticket-side ticket-back">
+        <img src="images/ticket_back.png" alt="Ticket Back">
+      </div>
+    </div>
+  </div>
+</section>
+ </body>
+</html>
