@@ -1,19 +1,19 @@
-/* 1. 첫 번째 페이지(커버) - 세로 스크롤을 위한 중앙 정렬 */
+/* 커버 섹션 */
 .slide--cover {
   position: relative;
   width: 100%;
   min-height: 100vh;
   height: auto;
-  flex: none;
-  
-  /* 정중앙 정렬 */
-  display: flex !important;      
-  justify-content: center; 
-  align-items: center;     
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #F9FDFF;
   margin: 0;
   padding: 0;
+  /* AOS가 커버를 숨기지 않도록 */
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* 2. 이미지 설정 - 비율 유지하며 95% 크기 */
@@ -283,13 +283,8 @@
 .reveal-section.active {
     opacity: 1 !important;
     transform: translateY(0) !important;
-}sss
-
-/* 첫 번째 섹션은 항상 보이도록 예외 처리 */
-.slide--cover {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
 }
+
 
 /* --- Location Section Style --- */
 /* =============================================
@@ -1068,7 +1063,7 @@ body.modal-open {
       }
   
       /* =============================================
-         기본 설정: 반응형 카드 레이아웃sss
+         기본 설정: 반응형 카드 레이아웃
          - 모바일(375x812) 기준으로 디자인
          - 더 큰 화면에서는 가운데 정렬된 카드처럼 보이게
          ============================================= */
@@ -1119,20 +1114,6 @@ body.modal-open {
         justify-content: center;
         align-items: center;
       }
-  
-      /* =============================================
-         1번 슬라이드: 커버 - 이미지 버전
-         ============================================= */
-         .slide--cover {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #F9FDFF;
-  }
   
       /* ---------------------------------------------
      상단: SAVE / THE / DATE (폰트만 강제 적용)
