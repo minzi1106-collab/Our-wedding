@@ -1,8 +1,8 @@
   (function () {
   'use strict';
 
-  var IMG_OFF = 'images/off_image.png';
-  var IMG_ON = 'images/on_image.png';
+  var IMG_OFF = 'images/music_off.png';
+  var IMG_ON = 'images/music_on.png';
 
   function initCoverMusic() {
     var btn = document.getElementById('music-toggle-btn');
