@@ -50,7 +50,6 @@
 ============================================= */
 .slide--intro {
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +65,6 @@
 
 .slide--couple {
   background-color: #FEEBFA;
-  min-height: 100vh;
   padding: 60px 24px;
   text-align: center;
   display: flex;
@@ -170,20 +168,11 @@
 /* Calendar section is now an image and styled inline in HTML */
 
 
-/* 1. 모든 섹션의 기본 투명도를 일단 1로 강제 설정 (보이게 만들기) */
-.reveal-section {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: all 0.8s ease-out;
-  display: flex !important;
-  /* 섹션이 날아가지 않게 고정 */
-}
-
-/* 2. 만약 애니메이션을 꼭 쓰고 싶다면, 아래 '초기화' 코드를 사용하세요 */
-/* (현재는 안 보이는 게 문제이므로 위 1번 코드가 우선입니다) */
+/* 스크롤 시 섹션이 나타나는 페이드업 애니메이션 */
 .reveal-section {
   opacity: 0;
   transform: translateY(30px);
+  transition: all 0.8s ease-out;
 }
 
 .reveal-section.active {
@@ -198,7 +187,6 @@
 ============================================= */
 .slide--location {
   background: #FFF8FE;
-  min-height: 100vh;
   padding: 60px 24px;
   text-align: center;
   display: flex;
@@ -506,7 +494,6 @@ body.modal-open {
   max-width: none;
   margin: 0 auto !important;
   background-color: #ffffff;
-  min-height: 100vh;
   padding: 60px 24px;
   box-sizing: border-box;
   position: relative;
@@ -632,7 +619,7 @@ body.modal-open {
    RSVP Section Styles - 세로 스크롤
 ============================================= */
 .slide--rsvp {
-  min-height: 100vh;
+
   padding: 60px 20px;
   background: #FEEBFA;
   display: flex;
@@ -711,7 +698,7 @@ body.modal-open {
    Gallery Section Styles - 세로 스크롤
 ============================================= */
 .slide--gallery {
-  min-height: 100vh;
+
   padding: 60px 20px;
   background: #ffffff;
   display: flex;
@@ -916,7 +903,6 @@ body.modal-open {
 /* 티켓 섹션 레이아웃 */
 .slide--ticket {
   background-color: #ffffff;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1054,10 +1040,8 @@ body {
 .slide {
   position: relative;
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -1220,8 +1204,6 @@ body {
   overflow: hidden;
   width: 100%;
   max-width: 375px;
-  height: 100vh;
-  height: 100svh;
   background-color: #fff;
   margin: 0 auto;
   display: flex;
@@ -1663,13 +1645,14 @@ html,
 /* ── Footer 섹션 ── */
 .footer-section {
   width: 100%;
-  height: 150px;
   background: #E4BBCD;
   /* Requested color */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 40px 0;
+  min-height: auto; /* 상하 배경 여백 축소를 위해 .slide의 100vh 설정을 초기화 */
 }
 
 .footer-tagline {
@@ -1678,7 +1661,7 @@ html,
   color: #1a1a1a;
   text-align: center;
   letter-spacing: 0.01em;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
   line-height: 1.5;
 }
 
@@ -1688,7 +1671,7 @@ html,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .footer-btn {
