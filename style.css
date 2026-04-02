@@ -231,26 +231,10 @@
   margin: 0 auto 30px;
 }
 
-#map {
+.map-img {
   width: 100%;
-  height: 350px;
-  border-radius: 20px;
-  background-color: #f4f4f4;
-  position: relative;
-  overflow: hidden;
-}
-
-.map-loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  font-size: 13px;
-  color: #666;
-  text-align: center;
-  background: rgba(244, 244, 244, 0.9);
+  height: auto;
+  display: block;
 }
 
 /* 텍스트 정보: 폰트 크기 및 자간 조정 */
@@ -619,13 +603,12 @@ body.modal-open {
    RSVP Section Styles - 세로 스크롤
 ============================================= */
 .slide--rsvp {
-
-  padding: 60px 20px;
+  padding: 0;
+  padding-top: 40px;
+  padding-bottom: 60px;
+  /* 여기서 RSVP 섹션 맨 아래 여유 공간을 조절하세요 (숫자를 키우면 더 넓어집니다) */
+  display: block;
   background: #FEEBFA;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
 }
 
@@ -669,6 +652,15 @@ body.modal-open {
   letter-spacing: -0.05em !important;
   line-height: 1.8 !important;
 }
+
+.slide--rsvp {
+  min-height: auto !important;
+  height: auto !important;
+
+  display: block !important;
+  /* 🔥 flex 완전 차단 */
+}
+
 
 /* RSVP 텍스트 애니메이션 효과 */
 .slide--rsvp .rsvp-text {
@@ -1328,7 +1320,7 @@ body {
   margin-top: 2svh;
   margin-top: 2vh;
   font-family: 'Inter', sans-serif;
-  s font-weight: 400;
+  font-weight: 400;
   font-size: 11px;
   letter-spacing: -0.02em;
   color: #8e7c65;
@@ -1652,7 +1644,8 @@ html,
   align-items: center;
   justify-content: center;
   padding: 40px 0;
-  min-height: auto; /* 상하 배경 여백 축소를 위해 .slide의 100vh 설정을 초기화 */
+  min-height: auto;
+  /* 상하 배경 여백 축소를 위해 .slide의 100vh 설정을 초기화 */
 }
 
 .footer-tagline {
