@@ -29,6 +29,8 @@ function initGallery() {
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
+      dynamicBullets: true,
+      dynamicMainBullets: 1
     },
 
     navigation: {
