@@ -445,7 +445,7 @@
   <script>
     // 갤러리 이미지 배열 - 나중에 50장 이상 추가 가능
     const galleryImages = Array.from({ length: 33 }, (_, i) =>
-      `images/photo${i + 1}.jpeg`
+      `images/photo${String(i + 1).padStart(2, '0')}.jpeg`
     );
 
     // 갤러리 기능 초기화
