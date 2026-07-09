@@ -617,7 +617,7 @@
     </div>
 
     <!-- 토스트 -->
-    <div class="toast" id="toast">복사되었습니다</div>
+    <div class="toast" id="toast">복사되었습니다.</div>
 
     <script>
       /* ── 데이터 ── */
@@ -632,6 +632,23 @@
           { role: "혼주", name: "김동수", bank: "신한", number: "000000 00000 001", kakaoUrl: "" },
           { role: "혼주", name: "이희정", bank: "신한", number: "000000 00000 002", kakaoUrl: "" }
         ]
+      };
+
+      /* ── 금융결제원 공동망 표준 은행 코드 ── */
+      var BANK_CODES = {
+        "국민": "004", "KB국민": "004", "KB국민은행": "004",
+        "신한": "088", "신한은행": "088",
+        "우리": "020", "우리은행": "020",
+        "하나": "081", "하나은행": "081",
+        "농협": "011", "NH농협": "011", "NH농협은행": "011",
+        "기업": "003", "IBK기업": "003", "IBK기업은행": "003",
+        "외환": "005", "수협": "007", "부산": "032",
+        "대구": "031", "iM뱅크": "031", "광주": "034",
+        "전북": "037", "경남": "039", "제주": "035",
+        "산업": "002", "우체국": "071", "신협": "048",
+        "새마을": "045", "새마을금고": "045",
+        "카카오뱅크": "090", "카카오": "090",
+        "토스뱅크": "092", "토스": "092", "케이뱅크": "089"
       };
 
       var KAKAO_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3C6.477 3 2 6.71 2 11.3c0 2.85 1.8 5.36 4.53 6.83L5.4 22l5.07-3.38c.5.07 1.01.1 1.53.1 5.523 0 10-3.71 10-8.3S17.523 3 12 3Z" fill="white"/></svg>';
@@ -678,7 +695,7 @@
           var timer = null;
           btn.addEventListener('click', function () {
             var text = btn.closest('.account-row').querySelector('.account-num').textContent.trim();
-            function onCopied() {
+            copyToClipboard(text, function () {
               btn.innerHTML = CHECK_SVG;
               btn.classList.add('copied');
               clearTimeout(timer);
@@ -686,18 +703,75 @@
                 btn.innerHTML = COPY_SVG;
                 btn.classList.remove('copied');
               }, 2000);
-              showToast();
-            }
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              navigator.clipboard.writeText(text).then(onCopied).catch(function () { fallback(text, onCopied); });
-            } else { fallback(text, onCopied); }
+              showToast("계좌번호가 복사되었습니다.");
+            });
           });
         });
 
-        section.querySelectorAll('.pay-btn').forEach(function (btn) {
+        section.querySelectorAll('.pay-btn').forEach(function (btn, idx) {
           btn.addEventListener('click', function () {
-            var url = btn.getAttribute('data-url');
-            if (url) window.open(url, '_blank');
+            var item = DATA[tab][idx];
+            var bankName = item.bank;
+            var accountNumber = item.number.replace(/[^0-9]/g, ''); // 숫자만 추출
+            var bankCode = BANK_CODES[bankName] || "";
+            var kakaoUrl = item.kakaoUrl;
+
+            // 1순위 / 3순위: 카카오페이 고유 송금 링크(Universal Link)가 등록된 경우 즉시 연결
+            if (kakaoUrl && kakaoUrl.trim() !== "") {
+              window.location.href = kakaoUrl.trim();
+              return;
+            }
+
+            // 2순위 / 4순위: 고유 링크가 없고 일반 계좌 정보만 있는 경우 폴백 시스템 구동
+            if (!bankCode || !accountNumber) {
+              // 정보 누락 시 클립보드 복사 폴백 즉시 실행
+              var fullAccount = bankName + " " + item.number;
+              copyToClipboard(fullAccount, function() {
+                showToast("계좌번호가 복사되었습니다.\n카카오톡에서 붙여넣어 송금해주세요.");
+              });
+              return;
+            }
+
+            // 계좌송금 비공식 딥링크 URL 스키마 구성
+            var deepLink = "kakaotalk://kakaopay/money/to/bank?bank_code=" + bankCode + "&bank_account_number=" + accountNumber;
+            var clickedTime = +new Date();
+            var isHidden = false;
+
+            // 앱 전환으로 화면 가시성이 바뀔 경우 감지하여 타이머 차단
+            var checkVisibility = function () {
+              if (document.visibilityState === 'hidden' || document.hidden) {
+                isHidden = true;
+                clearTimeout(fallbackTimer);
+                document.removeEventListener('visibilitychange', checkVisibility);
+                window.removeEventListener('pagehide', checkVisibility);
+              }
+            };
+
+            document.addEventListener('visibilitychange', checkVisibility);
+            window.addEventListener('pagehide', checkVisibility);
+
+            // 1.5초(1500ms) 대기 후 화면 가시성에 변화가 없으면 딥링크 작동 실패로 간주하고 폴백 구동
+            var fallbackTimer = setTimeout(function () {
+              document.removeEventListener('visibilitychange', checkVisibility);
+              window.removeEventListener('pagehide', checkVisibility);
+
+              var now = +new Date();
+              if (!isHidden && (now - clickedTime < 2200)) {
+                // 4순위: 계좌번호 클립보드 자동 복사 및 Toast 안내 표시
+                var fullAccount = bankName + " " + item.number;
+                copyToClipboard(fullAccount, function () {
+                  showToast("계좌번호가 복사되었습니다.\n카카오톡에서 붙여넣어 송금해주세요.");
+                  
+                  // 2순위: 범용 카카오톡 앱이라도 실행할 수 있도록 유도
+                  setTimeout(function () {
+                    window.location.href = "kakaotalk://";
+                  }, 1200);
+                });
+              }
+            }, 1500);
+
+            // 딥링크 실행 시도
+            window.location.href = deepLink;
           });
         });
 
@@ -722,21 +796,32 @@
         });
       });
 
-      /* ── 클립보드 폴백 ── */
-      function fallback(text, cb) {
+      /* ── 클립보드 복사 유틸리티 ── */
+      function copyToClipboard(text, callback) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(callback).catch(function () {
+            fallbackCopy(text, callback);
+          });
+        } else {
+          fallbackCopy(text, callback);
+        }
+      }
+
+      function fallbackCopy(text, callback) {
         var el = document.createElement('textarea');
         el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
         document.body.appendChild(el); el.focus(); el.select();
         try { document.execCommand('copy'); } catch (e) { }
         document.body.removeChild(el);
-        cb();
+        if (callback) callback();
       }
 
-      /* ── 토스트 ── */
-      function showToast() {
+      /* ── 토스트 알림 ── */
+      function showToast(msg) {
+        toastEl.innerText = msg || "복사되었습니다.";
         toastEl.classList.add('show');
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
+        toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 3000);
       }
 
       /* ── 초기 렌더링 ── */
