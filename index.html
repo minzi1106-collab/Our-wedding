@@ -625,7 +625,7 @@
         groom: [
           { role: "신랑", name: "권성근", bank: "우리", number: "1002 847 463372", kakaoUrl: "" },
           { role: "혼주", name: "권영민", bank: "우리", number: "051 029769 02 001", kakaoUrl: "" },
-          { role: "혼주", name: "박은하", bank: "우리", number: "1002 314 506558", kakaoUrl: "" }
+          { role: "혼주", name: "정은하", bank: "우리", number: "1002 314 506558", kakaoUrl: "" }
         ],
         bride: [
           { role: "신부", name: "김민지", bank: "국민", number: "384901 04 018492", kakaoUrl: "" },
@@ -836,7 +836,7 @@
 
     <div class="footer-buttons">
       <!-- 카카오 버튼 -->
-      <button class="footer-btn btn-kakao" id="btn-kakao-share" onclick="return false;">
+      <button class="footer-btn btn-kakao" id="btn-kakao-share">
         <span>카카오톡으로 청첩장 전하기</span>
         <i class="btn-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -854,12 +854,66 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2 2v1"></path>
           </svg>
         </i>
       </button>
     </div>
   </section>
+
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      var shareButton = document.getElementById('btn-kakao-share');
+      var kakaoJavaScriptKey = '7d2f45d2e607258d4b34e268cf278d2b';
+
+      if (!shareButton) return;
+
+      if (!window.Kakao) {
+        console.error('카카오 JavaScript SDK를 불러오지 못했습니다.');
+        return;
+      }
+
+      try {
+        if (!Kakao.isInitialized()) {
+          Kakao.init(kakaoJavaScriptKey);
+        }
+      } catch (error) {
+        console.error('카카오 SDK 초기화에 실패했습니다.', error);
+        return;
+      }
+
+      shareButton.addEventListener('click', function () {
+        var currentUrl = window.location.href;
+        var ogImage = document.querySelector('meta[property="og:image"]');
+        var imageUrl = ogImage ? ogImage.content : currentUrl;
+
+        try {
+          Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+              title: '권성근 ♥ 김민지 결혼합니다',
+              description: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
+              imageUrl: imageUrl,
+              link: {
+                mobileWebUrl: currentUrl,
+                webUrl: currentUrl
+              }
+            },
+            buttons: [{
+              title: '청첩장 보기',
+              link: {
+                mobileWebUrl: currentUrl,
+                webUrl: currentUrl
+              }
+            }]
+          });
+        } catch (error) {
+          console.error('카카오톡 공유에 실패했습니다.', error);
+        }
+      });
+    })();
+  </script>
 
   <script>
     document.getElementById('btn-copy-url-share').addEventListener('click', function () {
