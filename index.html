@@ -897,27 +897,26 @@
               url: shareUrl
             });
             return;
-          catch (err) {
-              // 사용자가 취소한 경우는 아무것도 하지 않음
-              if (err.name === 'AbortError') return;
+          } catch (err) {              // 사용자가 취소한 경우는 아무것도 하지 않음
+            if (err.name === 'AbortError') return;
 
-              // 오류가 난 경우에는 링크 복사로 대체
+            // 오류가 난 경우에는 링크 복사로 대체
+          }
+
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+
+            const toast = document.getElementById('toast');
+            if (toast) {
+              toast.classList.add('show');
+              setTimeout(() => toast.classList.remove('show'), 2000);
+            } else {
+              alert('청첩장 링크가 복사되었습니다.');
             }
-
-            try {
-              await navigator.clipboard.writeText(shareUrl);
-
-              const toast = document.getElementById('toast');
-              if (toast) {
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000);
-              } else {
-                alert('청첩장 링크가 복사되었습니다.');
-              }
-            } catch (err) {
-              window.prompt('아래 링크를 복사해주세요.', shareUrl);
-            }
-          });
+          } catch (err) {
+            window.prompt('아래 링크를 복사해주세요.', shareUrl);
+          }
+        });
   </script>
 
   <script>
