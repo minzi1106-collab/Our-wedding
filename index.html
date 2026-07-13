@@ -913,8 +913,6 @@
           if (navigator.share) {
             try {
               await navigator.share({
-                title: '권성근 ♥ 김민지 결혼합니다',
-                text: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
                 url: shareUrl
               });
               return;
@@ -936,43 +934,43 @@
   </script>
 
   <script>
-      document.getElementById('btn-copy-url-share').addEventListener('click', function () {
-        var text = window.location.href;
+    document.getElementById('btn-copy-url-share').addEventListener('click', function () {
+      var text = window.location.href;
 
-        function showCopyToast() {
-          var toastEl = document.getElementById('toast');
-          if (toastEl) {
-            toastEl.classList.add('show');
-            setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
-          } else {
-            alert('주소가 복사되었습니다.');
-          }
-        }
-
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(showCopyToast).catch(function () {
-            alert('주소 복사에 실패했습니다.');
-          });
+      function showCopyToast() {
+        var toastEl = document.getElementById('toast');
+        if (toastEl) {
+          toastEl.classList.add('show');
+          setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
         } else {
-          var el = document.createElement('textarea');
-          el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
-          document.body.appendChild(el); el.focus(); el.select();
-          try { document.execCommand('copy'); showCopyToast(); } catch (e) { alert('주소 복사에 실패했습니다.'); }
-          document.body.removeChild(el);
+          alert('주소가 복사되었습니다.');
         }
-      });
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showCopyToast).catch(function () {
+          alert('주소 복사에 실패했습니다.');
+        });
+      } else {
+        var el = document.createElement('textarea');
+        el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+        document.body.appendChild(el); el.focus(); el.select();
+        try { document.execCommand('copy'); showCopyToast(); } catch (e) { alert('주소 복사에 실패했습니다.'); }
+        document.body.removeChild(el);
+      }
+    });
   </script>
 
   <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-      if (window.AOS) {
-        AOS.init({
-          duration: 2000,
-          offset: 120,
-          once: false
-        });
-      }
+    if (window.AOS) {
+      AOS.init({
+        duration: 2000,
+        offset: 120,
+        once: false
+      });
+    }
   </script>
 </body>
 
