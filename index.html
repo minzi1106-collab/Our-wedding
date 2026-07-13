@@ -7,13 +7,16 @@
   <title>Wedding</title>
   <meta property="og:title" content="Wedding Invitation 💍">
   <meta property="og:description" content="권성근 · 김민지, 결혼식에 초대합니다">
-  <meta property="og:image" content="https://minzi1106-collab.github.io/mobile-wedding-new/images/opennew.png">
-  <meta property="og:url" content="https://minzi1106-collab.github.io/mobile-wedding-new/">
+  <meta property="og:image" content="https://our-wedding-wine-ten.vercel.app/images/opennew.png">
+  <meta property="og:url" content="https://our-wedding-wine-ten.vercel.app/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ko_KR">
 
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://our-wedding-wine-ten.vercel.app/images/opennew.png">
+
   <!-- Cormorant Upright 계열(제목), Zilla Slab(보조 텍스트) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel=" preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&family=Song+Myung&family=Zilla+Slab:wght@700&display=swap"
@@ -883,74 +886,76 @@
         return;
       }
 
-      shareButton.addEventListener('click', function () {
-        var currentUrl = window.location.href;
-        var ogImage = document.querySelector('meta[property="og:image"]');
-        var imageUrl = ogImage ? ogImage.content : currentUrl;
+      shareButton.addEventListener('click', async function () {
+        const shareUrl = 'https://our-wedding-wine-ten.vercel.app/';
 
-        try {
-          Kakao.Share.sendDefault({
-            objectType: 'feed',
-            content: {
+        if (navigator.share) {
+          try {
+            await navigator.share({
               title: '권성근 ♥ 김민지 결혼합니다',
-              description: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
-              imageUrl: imageUrl,
-              link: {
-                mobileWebUrl: currentUrl,
-                webUrl: currentUrl
+              text: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
+              url: shareUrl
+            });
+            return;
+          catch (err) {
+              // 사용자가 취소한 경우는 아무것도 하지 않음
+              if (err.name === 'AbortError') return;
+
+              // 오류가 난 경우에는 링크 복사로 대체
+            }
+
+            try {
+              await navigator.clipboard.writeText(shareUrl);
+
+              const toast = document.getElementById('toast');
+              if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+              } else {
+                alert('청첩장 링크가 복사되었습니다.');
               }
-            },
-            buttons: [{
-              title: '청첩장 보기',
-              link: {
-                mobileWebUrl: currentUrl,
-                webUrl: currentUrl
-              }
-            }]
+            } catch (err) {
+              window.prompt('아래 링크를 복사해주세요.', shareUrl);
+            }
           });
-        } catch (error) {
-          console.error('카카오톡 공유에 실패했습니다.', error);
-        }
-      });
-    })();
   </script>
 
   <script>
-    document.getElementById('btn-copy-url-share').addEventListener('click', function () {
-      var text = window.location.href;
+      document.getElementById('btn-copy-url-share').addEventListener('click', function () {
+        var text = window.location.href;
 
-      function showCopyToast() {
-        var toastEl = document.getElementById('toast');
-        if (toastEl) {
-          toastEl.classList.add('show');
-          setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
-        } else {
-          alert('주소가 복사되었습니다.');
+        function showCopyToast() {
+          var toastEl = document.getElementById('toast');
+          if (toastEl) {
+            toastEl.classList.add('show');
+            setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
+          } else {
+            alert('주소가 복사되었습니다.');
+          }
         }
-      }
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(showCopyToast).catch(function () {
-          alert('주소 복사에 실패했습니다.');
-        });
-      } else {
-        var el = document.createElement('textarea');
-        el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
-        document.body.appendChild(el); el.focus(); el.select();
-        try { document.execCommand('copy'); showCopyToast(); } catch (e) { alert('주소 복사에 실패했습니다.'); }
-        document.body.removeChild(el);
-      }
-    });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopyToast).catch(function () {
+            alert('주소 복사에 실패했습니다.');
+          });
+        } else {
+          var el = document.createElement('textarea');
+          el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+          document.body.appendChild(el); el.focus(); el.select();
+          try { document.execCommand('copy'); showCopyToast(); } catch (e) { alert('주소 복사에 실패했습니다.'); }
+          document.body.removeChild(el);
+        }
+      });
   </script>
 
   <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 2000,
-      offset: 120,
-      once: false
-    });
+      AOS.init({
+        duration: 2000,
+        offset: 120,
+        once: false
+      });
   </script>
 </body>
 
