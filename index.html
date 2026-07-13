@@ -864,61 +864,75 @@
     </div>
   </section>
 
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js" crossorigin="anonymous"></script>
   <script>
     (function () {
-      var shareButton = document.getElementById('btn-kakao-share');
-      var kakaoJavaScriptKey = '7d2f45d2e607258d4b34e268cf278d2b';
+      function copyInvitationUrl(shareUrl) {
+        var toast = document.getElementById('toast');
 
-      if (!shareButton) return;
-
-      if (!window.Kakao) {
-        console.error('카카오 JavaScript SDK를 불러오지 못했습니다.');
-        return;
-      }
-
-      try {
-        if (!Kakao.isInitialized()) {
-          Kakao.init(kakaoJavaScriptKey);
-        }
-      } catch (error) {
-        console.error('카카오 SDK 초기화에 실패했습니다.', error);
-        return;
-      }
-
-      shareButton.addEventListener('click', async function () {
-        const shareUrl = 'https://our-wedding-wine-ten.vercel.app/';
-
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title: '권성근 ♥ 김민지 결혼합니다',
-              text: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
-              url: shareUrl
-            });
-            return;
-          } catch (err) {              // 사용자가 취소한 경우는 아무것도 하지 않음
-            if (err.name === 'AbortError') return;
-
-            // 오류가 난 경우에는 링크 복사로 대체
+        function showCopiedMessage() {
+          if (toast) {
+            toast.classList.add('show');
+            setTimeout(function () { toast.classList.remove('show'); }, 2000);
+          } else {
+            alert('청첩장 링크가 복사되었습니다.');
           }
+        }
 
-          try {
-            await navigator.clipboard.writeText(shareUrl);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(shareUrl)
+            .then(showCopiedMessage)
+            .catch(function () { window.prompt('아래 링크를 복사해주세요.', shareUrl); });
+        }
 
-            const toast = document.getElementById('toast');
-            if (toast) {
-              toast.classList.add('show');
-              setTimeout(() => toast.classList.remove('show'), 2000);
-            } else {
-              alert('청첩장 링크가 복사되었습니다.');
+        var textarea = document.createElement('textarea');
+        textarea.value = shareUrl;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        try {
+          document.execCommand('copy');
+          showCopiedMessage();
+        } catch (error) {
+          window.prompt('아래 링크를 복사해주세요.', shareUrl);
+        }
+
+        document.body.removeChild(textarea);
+        return Promise.resolve();
+      }
+
+      function initKakaoShareButton() {
+        var shareButton = document.getElementById('btn-kakao-share');
+        var shareUrl = 'https://our-wedding-wine-ten.vercel.app/';
+
+        if (!shareButton) return;
+
+        shareButton.addEventListener('click', async function () {
+          if (navigator.share) {
+            try {
+              await navigator.share({
+                title: '권성근 ♥ 김민지 결혼합니다',
+                text: '2026년 10월 17일 토요일 오후 12시, 보코 서울 강남 by IHG',
+                url: shareUrl
+              });
+              return;
+            } catch (error) {
+              if (error && error.name === 'AbortError') return;
             }
-          } catch (err) {
-            window.prompt('아래 링크를 복사해주세요.', shareUrl);
           }
-        }
 
-      });
+          copyInvitationUrl(shareUrl);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initKakaoShareButton);
+      } else {
+        initKakaoShareButton();
+      }
+    })();
   </script>
 
   <script>
@@ -952,11 +966,13 @@
   <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-      AOS.init({
-        duration: 2000,
-        offset: 120,
-        once: false
-      });
+      if (window.AOS) {
+        AOS.init({
+          duration: 2000,
+          offset: 120,
+          once: false
+        });
+      }
   </script>
 </body>
 
