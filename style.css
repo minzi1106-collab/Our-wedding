@@ -172,7 +172,7 @@
 .reveal-section {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .reveal-section.active {
@@ -1003,7 +1003,7 @@ body.modal-open {
 .slide--ticket.reveal-section {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .slide--ticket.reveal-section.active {
@@ -1309,20 +1309,20 @@ body {
   display: block;
 }
 
-/* ── 티켓: 남은 공간을 최대한 채움 ── */
+/* ── 티켓: 스크롤 중에도 최초 크기를 유지 ── */
 .ticket-wrapper {
   position: relative;
   z-index: 1;
-  /* 너비는 고정, 높이는 남은 공간에 맞게 */
+  /* viewport 단위는 모바일 브라우저 UI 변화에 따라 재계산되므로 사용하지 않습니다. */
   width: auto;
   /* 비율 유지: 790:1370 ≈ 0.577 */
-  /* 가용 높이(100svh - 상하패딩 - 타이틀 - 힌트) 기준 */
-  height: 68svh;
-  height: 68vh;
+  height: 552px;
+  min-height: 552px;
+  max-height: 552px;
   aspect-ratio: 856 / 1618;
   perspective: 800px;
   cursor: pointer;
-  flex-shrink: 0;
+  flex: 0 0 552px;
 }
 
 .ticket-inner {
@@ -1330,7 +1330,8 @@ body {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: 0.7s ease-out;
+  /* 뒤집기 회전만 전환하며, 크기 관련 속성은 전환하지 않습니다. */
+  transition: transform 0.7s ease-out;
 }
 
 .ticket-wrapper.flipped .ticket-inner {

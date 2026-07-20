@@ -460,7 +460,7 @@
       galleryImages.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'swiper-slide';
-        slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="lightbox-image">`;
+        slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="lightbox-image" loading="lazy" decoding="async">`;
         lightboxWrapper.appendChild(slide);
       });
 
@@ -496,6 +496,8 @@
           image.src = src;
           image.alt = `Gallery Image ${imageIndex + 1}`;
           image.className = 'gallery-image';
+          image.loading = 'lazy';
+          image.decoding = 'async';
           image.addEventListener('click', () => {
             lightbox.classList.add('active');
             lightboxSwiper.slideToLoop(imageIndex, 0);
@@ -934,7 +936,10 @@
       AOS.init({
         duration: 2000,
         offset: 120,
-        once: false
+        once: true,
+        disableMutationObserver: true,
+        throttleDelay: 99,
+        debounceDelay: 50
       });
     }
   </script>
