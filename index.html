@@ -201,16 +201,10 @@
           <p class="gallery-hint">사진을 클릭하시면 크게 보실 수 있습니다.</p>
         </div>
 
-        <div class="swiper gallery-swiper">
-          <div class="swiper-wrapper" id="gallery-swiper-wrapper">
-            <!-- Gallery images will be injected here by JavaScript -->
-          </div>
-          <!-- 좌우 네비게이션 화살표 버튼 -->
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <!-- 하단 pagination -->
-          <div class="swiper-pagination"></div>
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Gallery images will be injected here by JavaScript -->
         </div>
+        <button type="button" class="gallery-more-button" id="gallery-more-button">사진 더보기</button>
       </section>
 
 
@@ -446,59 +440,28 @@
 
   <!-- 갤러리 기능 JavaScript -->
   <script>
-    // 갤러리 이미지 배열 - 나중에 50장 이상 추가 가능
+    // 갤러리 이미지 배열 - 파일명 숫자 순서로 정렬
     const galleryImages = Array.from({ length: 33 }, (_, i) =>
       `images/photo${String(i + 1).padStart(2, '0')}.jpeg`
-    );
+    ).sort((a, b) => a.localeCompare(b, undefined, {
+      numeric: true,
+      sensitivity: 'base'
+    }));
+    const GALLERY_BATCH_SIZE = 9;
 
     // 갤러리 기능 초기화
     function initGallery() {
-      // 갤러리 슬라이드 생성
-      const galleryWrapper = document.getElementById('gallery-swiper-wrapper');
+      const galleryGrid = document.getElementById('gallery-grid');
+      const moreButton = document.getElementById('gallery-more-button');
       const lightboxWrapper = document.getElementById('lightbox-swiper-wrapper');
+      let visibleImageCount = 0;
 
-      // 갤러리 슬라이드 HTML 생성
-      galleryImages.forEach((src, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="gallery-image">`;
-        galleryWrapper.appendChild(slide);
-      });
-
-      // 라이트박스 슬라이드 HTML 생성
+      // 라이트박스 슬라이드는 한 번만 만들고 기존 Swiper 기능을 그대로 사용합니다.
       galleryImages.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'swiper-slide';
         slide.innerHTML = `<img src="${src}" alt="Gallery Image ${index + 1}" class="lightbox-image">`;
         lightboxWrapper.appendChild(slide);
-      });
-
-      // 갤러리 스와이퍼 초기화
-      const gallerySwiper = new Swiper('.gallery-swiper', {
-        spaceBetween: 16,
-        slidesPerView: 1,
-        centeredSlides: true,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-          dynamicBullets: true,
-          dynamicMainBullets: 1
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 12
-          },
-          375: {
-            slidesPerView: 1,
-            spaceBetween: 16
-          }
-        }
       });
 
       // 라이트박스 스와이퍼 초기화
@@ -512,8 +475,8 @@
           clickable: true,
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '.lightbox .swiper-button-next',
+          prevEl: '.lightbox .swiper-button-prev',
         },
         keyboard: {
           enabled: true,
@@ -523,16 +486,29 @@
       // 라이트박스 기능
       const lightbox = document.getElementById('lightbox');
       const lightboxClose = document.getElementById('lightbox-close');
-      const galleryImagesElements = document.querySelectorAll('.gallery-image');
+      // 9장씩 그리드에 추가하고, 클릭한 사진의 원래 순서로 라이트박스를 엽니다.
+      function renderMoreImages() {
+        const nextImageCount = Math.min(visibleImageCount + GALLERY_BATCH_SIZE, galleryImages.length);
 
-      // 갤러리 이미지 클릭 시 라이트박스 열기
-      galleryImagesElements.forEach((image, index) => {
-        image.addEventListener('click', () => {
-          lightbox.classList.add('active');
-          // 같은 인덱스의 라이트박스 슬라이드로 이동
-          lightboxSwiper.slideTo(index + 1, 0);
+        galleryImages.slice(visibleImageCount, nextImageCount).forEach((src, index) => {
+          const imageIndex = visibleImageCount + index;
+          const image = document.createElement('img');
+          image.src = src;
+          image.alt = `Gallery Image ${imageIndex + 1}`;
+          image.className = 'gallery-image';
+          image.addEventListener('click', () => {
+            lightbox.classList.add('active');
+            lightboxSwiper.slideToLoop(imageIndex, 0);
+          });
+          galleryGrid.appendChild(image);
         });
-      });
+
+        visibleImageCount = nextImageCount;
+        moreButton.hidden = visibleImageCount >= galleryImages.length;
+      }
+
+      renderMoreImages();
+      moreButton.addEventListener('click', renderMoreImages);
 
       // 라이트박스 닫기 버튼
       lightboxClose.addEventListener('click', () => {
@@ -553,16 +529,6 @@
         }
       });
 
-      // 갤러리와 라이트박스 동기화
-      gallerySwiper.on('slideChange', function () {
-        if (lightbox.classList.contains('active')) {
-          lightboxSwiper.slideTo(gallerySwiper.activeIndex, 0);
-        }
-      });
-
-      lightboxSwiper.on('slideChange', function () {
-        gallerySwiper.slideTo(lightboxSwiper.activeIndex, 0);
-      });
     }
 
     // DOM 로드 후 갤러리 초기화

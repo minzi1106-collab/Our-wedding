@@ -902,6 +902,38 @@ body.modal-open {
   transform: scale(0.98);
 }
 
+/* 갤러리 본문: 슬라이더 대신 3열 정사각형 그리드 */
+.gallery-grid {
+  width: 100%;
+  max-width: 335px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0 auto;
+}
+
+.gallery-grid .gallery-image {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  border-radius: 16px;
+}
+
+.gallery-more-button {
+  margin-top: 20px;
+  padding: 9px 16px;
+  border: 1px solid rgba(184, 54, 110, 0.2);
+  border-radius: 16px;
+  background: #ffffff;
+  color: #B8366E;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.gallery-more-button[hidden] {
+  display: none;
+}
+
 /* 티켓 섹션 레이아웃 */
 .slide--ticket {
   background-color: #ffffff;
