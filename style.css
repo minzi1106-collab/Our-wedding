@@ -915,7 +915,7 @@ body.modal-open {
 .gallery-grid .gallery-image {
   aspect-ratio: 1 / 1;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 4px;
 }
 
 .gallery-more-button {
